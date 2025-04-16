@@ -1,0 +1,28 @@
+{
+  "name": "line-bot",
+  "version": "1.0.0",
+  "main": "src/app.ts",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "start": "node --loader ts-node/esm --experimental-specifier-resolution=node src/app.ts"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^9.8.0",
+    "@types/express": "^5.0.1",
+    "@types/node-cron": "^3.0.11",
+    "@types/sharp": "^0.32.0",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.24.0",
+    "express": "^5.1.0",
+    "file-type": "^20.4.1",
+    "node-cron": "^3.0.3",
+    "openai": "^4.94.0",
+    "prettier": "^3.5.3",
+    "sharp": "^0.34.1",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.8.3"
+  }
+}
