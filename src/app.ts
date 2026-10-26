@@ -46,6 +46,10 @@ function handleEvent(event: line.WebhookEvent) {
   return eventHandlerManager.handleCommand(event);
 }
 
-app.listen(5000, () => {
+app.listen(5000, (err) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
   console.log('Server is running on port 5000');
 });
