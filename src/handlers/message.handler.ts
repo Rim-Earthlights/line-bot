@@ -21,6 +21,12 @@ export class MessageHandler implements EventHandler {
           return;
         }
         const profile = await clients.apiClient.getProfile(userId);
+
+        if (event.message.text.trim() === '/delete') {
+          await chatService.deleteHistory(profile, event.replyToken);
+          break;
+        }
+
         await chatService.sendMessage(profile, event.replyToken, event.message.text);
         break;
       }

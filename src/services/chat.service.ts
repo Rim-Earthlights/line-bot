@@ -67,6 +67,17 @@ export class ChatService {
   }
 
   /**
+   * チャット履歴を削除する
+   * 返答生成中のメッセージは削除前の履歴で返答される
+   * @param user ユーザー
+   * @param replyToken リプライトークン
+   */
+  async deleteHistory(user: line.Profile, replyToken: string) {
+    ChatService.CHAT_LIST = ChatService.CHAT_LIST.filter((c) => c.id !== user.userId);
+    await this.send(user.userId, replyToken, 'チャット履歴を削除しました。');
+  }
+
+  /**
    * メッセージを送信する
    * @param user ユーザー
    * @param replyToken リプライトークン
