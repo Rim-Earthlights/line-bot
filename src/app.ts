@@ -32,7 +32,7 @@ const app = express();
 await initJob();
 
 app.post('/webhook', middleware, (req, res) => {
-  console.log(req.body.events[0].replyToken);
+  console.log(req.body.events[0]?.replyToken);
   Promise.all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
     .catch((err) => {
