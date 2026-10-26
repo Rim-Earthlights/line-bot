@@ -8,7 +8,12 @@ export async function initJob() {
    */
   cron.schedule('* * * * *', async () => {
     ChatService.CHAT_LIST.map(async (c) => {
-      if (c.timestamp.isBefore(dayjs().subtract(30, 'minute')) && !c.memory) {
+      if (
+        c.timestamp.isBefore(dayjs().subtract(30, 'minute')) &&
+        !c.memory &&
+        // 返答生成中のチャットは消さない
+        !ChatService.QUEUES.has(c.id)
+      ) {
         ChatService.CHAT_LIST = ChatService.CHAT_LIST.filter((g) => g.id !== c.id);
       }
     });
