@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { EventManager } from './handlers/manager/event.manager';
 import { initJob } from './job/job';
 import { CONFIG } from './config/config';
+import { DedupService } from './services/dedup.service';
 
 const channelSecret = CONFIG.LINE.CHANNEL_SECRET;
 const channelAccessToken = CONFIG.LINE.CHANNEL_ACCESS_TOKEN;
@@ -33,16 +34,20 @@ await initJob();
 
 app.post('/webhook', middleware, (req, res) => {
   console.log(req.body.events[0]?.replyToken);
-  Promise.all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).end();
-    });
+  // 返答生成を待つとLINE側でタイムアウトして再送されるため、先に応答する
+  res.status(200).end();
+
+  for (const event of req.body.events as line.WebhookEvent[]) {
+    handleEvent(event).catch((err) => console.error(err));
+  }
 });
 
 // event handler
-function handleEvent(event: line.WebhookEvent) {
+async function handleEvent(event: line.WebhookEvent) {
+  if (!(await DedupService.isFirstDelivery(event.webhookEventId))) {
+    console.log(`duplicate event skipped: ${event.webhookEventId}`);
+    return;
+  }
   return eventHandlerManager.handleCommand(event);
 }
 

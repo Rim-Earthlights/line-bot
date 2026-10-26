@@ -23,6 +23,9 @@ export const CONFIG = {
     // default model
     DEFAULT_MODEL: LiteLLMModel.ANTHROPIC_CLAUDE_HAIKU_5_5,
   },
+  VALKEY: {
+    URL: process.env.VALKEY_URL,
+  },
   LINE: {
     CHANNEL_SECRET: process.env.LINE_CHANNEL_SECRET,
     CHANNEL_ACCESS_TOKEN: process.env.LINE_CHANNEL_ACCESS_TOKEN,
