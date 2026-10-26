@@ -4,6 +4,7 @@
   "main": "src/app.ts",
   "type": "module",
   "license": "MIT",
+  "packageManager": "pnpm@11.23.0",
   "scripts": {
     "start": "node --loader ts-node/esm --experimental-specifier-resolution=node src/app.ts"
   },
